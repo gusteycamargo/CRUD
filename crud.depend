@@ -13,14 +13,16 @@
 	<stdio.h>
 	"Pessoa.h"
 
-1567810006 source:c:\users\gusta\desktop\c++\crud\src\manterpessoa.cpp
-	"ManterPessoa.h"
+1567951841 source:c:\users\gusta\desktop\c++\crud\src\manterpessoa.cpp
+	<string>
 	<iostream>
 	<fstream>
+	<stdlib.h>
+	<stdio.h>
+	"ManterPessoa.h"
 	"Pessoa.h"
-	<string>
 
-1567730061 c:\users\gusta\desktop\c++\crud\include\manterpessoa.h
+1567951426 c:\users\gusta\desktop\c++\crud\include\manterpessoa.h
 	"Pessoa.h"
 	<string>
 

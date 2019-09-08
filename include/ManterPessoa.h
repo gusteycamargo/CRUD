@@ -8,9 +8,10 @@ using namespace std;
 class ManterPessoa
 {
     public:
-        void cadastraPessoa(Pessoa p);
-        void recebePessoas();
-
+        void gravaEmArquivo(Pessoa p);
+        void visualizaArquivo();
+        bool excluirPessoa(string nome);
+        bool editarPessoa(Pessoa p, string nome);
     protected:
 
     private:
