@@ -8,6 +8,7 @@ using namespace std;
 
 void gravaEmArquivo(Pessoa p);
 void visualizaArquivo();
+bool excluirPessoa(string nome);
 
 int main()
 {
@@ -56,6 +57,20 @@ int main()
         else if(op == 2){
             system("CLS");
             visualizaArquivo();
+            cout << "Pressione qualquer tecla para continuar..." << endl;
+            fflush(stdin);
+            getchar();
+        }
+        else if(op == 3){
+            system("CLS");
+            cout << "Digite o nome da pessoa a ser excluida: " << endl;
+            cin >> nome;
+            if(excluirPessoa(nome) == true){
+                cout << "Pessoa excluida com sucesso..." << endl;
+            }
+            else{
+                cout << "Erro ao excluir..." << endl;
+            }
             cout << "Pressione qualquer tecla para continuar..." << endl;
             fflush(stdin);
             getchar();
@@ -118,6 +133,62 @@ void visualizaArquivo(){
     }
 
     arquivo.close();
+}
+
+bool excluirPessoa(string nome){
+    ifstream arquivoE;
+    ofstream arquivoI;
+    string linha;
+    int cont = 0, contLinha = 0;
+    bool ver = false;
+    arquivoE.open("pessoas.txt");
+    arquivoI.open("temp.txt");
+    if(arquivoE.is_open()){
+        while(getline(arquivoE, linha)){
+            if(nome == linha){
+                ver = true;
+                if(contLinha == 0){
+                    contLinha = 4;
+                }
+            }
+            else{
+                ver = false;
+            }
+
+            if(cont == 0 && contLinha == 0){
+                arquivoI << linha << "\n";
+                cont++;
+            }
+            else if(cont == 1 && contLinha == 0){
+                arquivoI << linha << "\n";
+                cont++;
+            }
+            else if(cont == 2 && contLinha == 0){
+                arquivoI << linha << "\n";
+                cont++;
+            }
+            else if(cont == 3 && contLinha == 0){
+                arquivoI << linha << "\n";
+                cont = 0;
+                contLinha = 0;
+            }
+
+            if(contLinha != 0){
+                contLinha--;
+            }
+        }
+    }
+    else{
+        cout << "Não foi possível abrir o arquivo" << endl;
+        return false;
+    }
+    arquivoI.close();
+    arquivoE.close();
+
+    remove("pessoas.txt");
+    rename("temp.txt", "pessoas.txt");
+
+    return true;
 }
 
 

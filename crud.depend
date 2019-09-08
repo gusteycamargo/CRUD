@@ -6,8 +6,9 @@
 1567729549 c:\users\gusta\desktop\c++\crud\include\pessoa.h
 	<string>
 
-1567809996 source:c:\users\gusta\desktop\c++\crud\main.cpp
+1567911438 source:c:\users\gusta\desktop\c++\crud\main.cpp
 	<iostream>
+	<fstream>
 	<stdlib.h>
 	<stdio.h>
 	"Pessoa.h"
