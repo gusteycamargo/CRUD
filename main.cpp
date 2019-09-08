@@ -9,12 +9,13 @@ using namespace std;
 void gravaEmArquivo(Pessoa p);
 void visualizaArquivo();
 bool excluirPessoa(string nome);
+bool editarPessoa(Pessoa p, string nome);
 
 int main()
 {
     int op = 0;
     Pessoa p;
-    string nome, cpf, email;
+    string nome, cpf, email, nomeP;
     int idade = 0;
 
     do{
@@ -24,7 +25,8 @@ int main()
         cout << "1 - Cadastrar" << endl;
         cout << "2 - Visualizar" << endl;
         cout << "3 - Excluir" << endl;
-        cout << "4 - Sair" << endl;
+        cout << "4 - Editar" << endl;
+        cout << "5 - Sair" << endl;
 
         cin >> op;
 
@@ -76,6 +78,38 @@ int main()
             getchar();
         }
         else if(op == 4){
+            system("CLS");
+            cout << "Digite o nome da pessoa a ser editada: " << endl;
+            cin >> nomeP;
+            cout << "Novos valores da pessoas \n" << endl;
+            cout << "Digite o nome: " << endl;
+            cin >> nome;
+
+            cout << "Digite o CPF (sem pontuacao): " << endl;
+            cin >> cpf;
+
+            cout << "Digite o e-mail: " << endl;
+            cin >> email;
+
+            cout << "Digite a idade: " << endl;
+            cin >> idade;
+
+            p.setNome(nome);
+            p.setCpf(cpf);
+            p.setEmail(email);
+            p.setIdade(idade);
+
+            if(editarPessoa(p, nomeP) == true){
+                cout << "Pessoa editada com sucesso..." << endl;
+            }
+            else{
+                cout << "Erro ao excluir..." << endl;
+            }
+            cout << "Pressione qualquer tecla para continuar..." << endl;
+            fflush(stdin);
+            getchar();
+        }
+        else if(op == 5){
             cout << "Saindo..." << endl;
         }
         else{
@@ -84,7 +118,7 @@ int main()
             fflush(stdin);
             getchar();
         }
-    }while(op != 4);
+    }while(op != 5);
 
     return 0;
 }
@@ -191,4 +225,81 @@ bool excluirPessoa(string nome){
     return true;
 }
 
+bool editarPessoa(Pessoa p, string nome){
+    ifstream arquivoE;
+    ofstream arquivoI;
+    string linha;
+    int cont = 0, contLinha = 0;
+    bool ver = false;
+    arquivoE.open("pessoas.txt");
+    arquivoI.open("temp.txt");
 
+    if(arquivoE.is_open()){
+        while(getline(arquivoE, linha)){
+            if(nome == linha){
+                ver = true;
+                if(contLinha == 0){
+                    contLinha = 4;
+                }
+            }
+
+            if(cont == 0){
+                if(ver == true){
+                    arquivoI << p.getNome() << "\n";
+                }
+                else{
+                    arquivoI << linha << "\n";
+                }
+
+                cont++;
+            }
+            else if(cont == 1){
+                if(ver == true){
+                    arquivoI << p.getCpf() << "\n";
+                }
+                else{
+                    arquivoI << linha << "\n";
+                }
+
+                cont++;
+            }
+            else if(cont == 2){
+                if(ver == true){
+                    arquivoI << p.getEmail() << "\n";
+                }
+                else{
+                    arquivoI << linha << "\n";
+                }
+
+                cont++;
+            }
+            else if(cont == 3){
+                if(ver == true){
+                    arquivoI << p.getIdade() << "\n";
+                }
+                else{
+                    arquivoI << linha << "\n";
+                }
+
+                cont = 0;
+                contLinha = 0;
+                ver = false;
+            }
+
+            if(contLinha != 0){
+                contLinha--;
+            }
+        }
+    }
+    else{
+        cout << "Não foi possível abrir o arquivo" << endl;
+        return false;
+    }
+    arquivoI.close();
+    arquivoE.close();
+
+    remove("pessoas.txt");
+    rename("temp.txt", "pessoas.txt");
+
+    return true;
+}
